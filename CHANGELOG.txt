@@ -1,0 +1,124 @@
+1.0.1
+- Updated to BlackMagic SDK 12.4
+- Fix for Blackmagic Rec601 486 line error popup
+
+1.0.0
+- No changes
+
+0.4.3
+- bugfix: fix crash on destruction of ffmpeg converter due to double free
+- bugfix: 480p60/576p50 signals crash VP
+- internal: major refactor, code is now a lib wich can be tested
+- updated to ffmpeg master from 20210819
+
+0.4.2
+- bugfix: white screen crash at end of play
+- Support for HDFury LLDV->HDR (http://videoprocessor.org/lldv)
+- bugfix: formatter destruction memory leak clean up
+- added pop-up box for displaying capture device errors to the user
+- added button to restart capture device
+- internal: Put formatters together
+
+0.4.1
+- Fix for interlaced sources
+
+0.4.0: Upscaling, added MPCVR renderer, HDR controls
+- re-release of beta3
+
+0.4.0-beta3
+- Added V210 to P210 converter for general MPCVR YUV422 duty
+- Frame queue size can now be chanced on the fly without restarting renderers
+- Lots of small TODOs solved
+
+0.4.0-beta2
+- HDR support for MPC Video Renderer (only for non-rgb formats, rest not yet supported by renderer)
+- Fast v210 to p010 encoder which makes rendering times acceptable
+- Fix for bad missed frame count and drops
+- known issue: using r210 input with MPCVR is slow as it performs poorly and does not enable HDR, use the v210 to p010 conversion for testing
+
+0.4.0-beta1
+- Option to force YCbCr422 (v210) to YCbCr420 (p010) to undo DeckLink conversion so that the renderer can do the upscaling
+- Support for MPC Video Renderer (https://github.com/Aleksoid1978/VideoRenderer)
+- You can now override all HDR data such as colorspaces and luminance values
+- Display modes now stores and uess ticks/duration for video frames
+- New command line option /frame_offset. Values can be "auto" to enable auto tuning or an integer which is set in the frame offset field.
+- Major overhaul of renderer code
+- pixelformat changed to VideoFrameEncoding as that covers the meaning better
+- Do not show logo in display if renderer is running, show once renderer is done again
+- Fixed all compilation warnings and handling them as error in the compiler now
+- Latency numbers are colored to reflect how good they are
+- Fullscreen button is now checkbox
+- OnPaint piped through to renderers
+- ffmpeg logging enabled
+- Improved error messages
+
+0.3.2
+- Most throws now lead to error popup
+- keyboard shortcut added for renderer reset (r)
+- Renderer can now be selected by command line option /renderer, example: /renderer "DirectShow - Video Renderer"
+- Command line options /renderer [name] and /fullscreen together now immediately leads to fullscreen again (fire-and-forget)
+- Extended the DirectShow start-stop options to include non-stop and smart selection options
+- Using VP design icon
+- Windowed video window now has black background and logo
+- The renderer used now self-identifies in a static so that the user knows what's under the hood
+- Internal cleanups
+
+0.3.1
+- Default frame timing changed to clock+theo as multiple users reported blips in clock-clock
+
+0.3.0: Clocks and any DirectShow renderer
+- Always uses the best clock available (=card hardware clock)
+- HDR info is now in CIE image
+- Added final handler for throws which pops up a messagebox upon thrown exceptions, this allows the user to understand what's going on in many situations
+- Removed all mutexes (outside of directshow), it now runs lock-free with a few atomics to ensure correctness
+- Version number visible in window title
+- Mouse not visible anymore in video render window, both windowed and full-screen
+- Pressing return closed the window, now takes context dependant action with a default of restarting the renderer
+- Our queue dropped frame counter (excluding renderer-dropped frames)
+- Missing frame counter (never delivered by capture but found by timestamp-gap analysis)
+- Process priority is now set to high on start
+- User selectable frame-interval determination modes, clock-clock, clock-theo, theo and none
+- Renderer reset button, which stops, clears the queue and starts playback again
+- AVX required (requires < 10-year old CPU)
+- Disable screen saver/power save when running
+- VideoProcessor is now DirectShow renderer independent, you can use any installed DirectShow renderer.
+- Optional auto-tune params based on renderer queue and exit latency.
+- FIX: Deadlock situation with blackmagic callbacks
+- FIX: frame timestamps now correct
+- FIX: Correct process name in task list
+
+0.2.0
+- SSE2 build config, not using AVX anymore until needed
+- Integrated ffmpeg
+- Losslessly convert RGB formats which most renderers cannot handle natively, right now supports r210 and r12b; both are used by PS4Pro
+
+0.1.1
+- Figured out why my keyboard commands were not working, some renderers have anti-debugging protection which triggers when running inside
+  of MSVC debugger. That also disables the keyboard shortcuts. They just worked. Cleaned up the code to remove the needless paths.
+- Now has the /fullscreen command line option which can be given. As soon as the program detects a renderable input it'll change to
+  fullscreen mode
+- Enable/disable buttons based on presence of renderer
+- If the renderer fails to start ensure no more fullscreen and give user a retry button
+- Fix: Error upon switching capture card input which remembers old state
+- Fix: GUI elements & state related to capture device were uninitialized at start and not cleared when restarting capture
+
+0.1.0
+- Full screen now works and remains full even when modeswitching.
+  Will full-screen to current monitor.
+  Toggle with alt-enter, exit with escape.
+
+0.0.4
+- Overridable DirectShow inputs to renderer
+
+0.0.3
+- If the renderer throws this is now shown in the GUI and properly handled.
+- You can actually get out of full-screen with alt-f4
+
+0.0.2
+- Fix for SDR handling which would stop the renderer
+- In renderer stops with a failure it will now be restarted by either pressing the restart button or when a new mode comes along
+
+0.0.1
+- First release, very very alpha, will blow up, probably eats your homework - be warned!
+- Known issue: can't return from full screen mode
+- Known issue: Only supports BlackMagic cards and only support v210 input
