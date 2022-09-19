@@ -1,6 +1,6 @@
 //{{NO_DEPENDENCIES}}
 // Microsoft Visual C++ generated include file.
-// Used by VideoProcessor.rc
+// Used by VideoProcessor.rc 
 //
 #define IDD_VIDEOPROCESSOR_DIALOG       102
 #define IDR_MAINFRAME                   128

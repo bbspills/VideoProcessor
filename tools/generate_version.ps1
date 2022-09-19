@@ -1,10 +1,10 @@
 # From https://blog.didenko.com/2013/11/version-inventory.html
 
 Param (
- [String]$Project,
- [String]$GitRoot,
+ [String]$Project="VideoProcessor",
+ [String]$GitRoot="C:\source\videoprocessor-main",
  [String]$HeaderFile="version.h",
- [String]$VerPrefix="https://github.com/defl/videoprocessor/commit/"
+ [String]$VerPrefix="https://github.com/bbspills/VideoProcessor/commit/"
 )
 
 Push-Location -LiteralPath $GitRoot
